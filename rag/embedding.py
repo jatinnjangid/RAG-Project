@@ -23,4 +23,10 @@ if __name__ == "__main__":
     sentences = [
         "In between each cycle, we spent to weeks coling down",
         "Employees wil recieve early allowance",
-        "This recepie need two cups of flour"    ]
+        "This recepie need two cups of flour"   
+    ]
+    question_vector = model.embed_query(question)
+    sedences_vectors = model.embed_documents(sentences)
+    for sentence, vector in zip(sentences, sedences_vectors):
+        score = cosine_similarity(question_vector, vector)
+        print(f"{score:.3f} : {sentence}")

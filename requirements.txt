@@ -2,3 +2,7 @@ langchain-core
 langchain-text-splitters
 langchain-huggingface
 sentence-transformers
+langchain-chroma
+langchain-groq
+python-dotenv
+#openai
