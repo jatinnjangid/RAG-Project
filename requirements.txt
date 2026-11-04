@@ -6,3 +6,4 @@ langchain-chroma
 langchain-groq
 python-dotenv
 #openai
+rank-bm25

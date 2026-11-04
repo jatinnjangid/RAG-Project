@@ -13,8 +13,13 @@ PERSIST_DIR = "vector_db"
 COLLECTION_NAME = "handbook"
 
 def build_vector_store(chunks: list[Document], embedding_model: Embeddings,) -> Chroma:
-    if not Path(PERSIST_DIR).exists():
-        shutil.rmtree(PERSIST_DIR)
+    persist_path = Path(PERSIST_DIR)
+    if persist_path.exists():
+        try:
+            shutil.rmtree(persist_path)
+        except FileNotFoundError:
+            if persist_path.exists():
+                raise
 
     vector_store = Chroma.from_documents(
         documents = chunks,
@@ -33,6 +38,15 @@ def load_vector_store(embedding_model: Embeddings) -> Chroma:
         embedding_function = embedding_model,
         persist_directory = PERSIST_DIR
     )
+
+def get_all_chunks(vector_store: Chroma);
+    data = vector_store.get()
+
+    return [
+        Document(page_content=text, metadata=metadata)
+        for text, metadata in zip(data['documents'], data['metadatas'])
+    ]
+
 if __name__ == "__main__":
     from rag.chunker import split_documents
     from rag.embedding import get_embeddings

@@ -12,7 +12,7 @@ class RAGPipeline:
 
     def __init__(self, retriever: BaseRetriever, llm: BaseChatModel):
         self.retriever = retriever
-        self.chain = RAG_PROMPT | llm | StrOutputParser
+        self.chain = RAG_PROMPT | llm | StrOutputParser()
 
     def ask(self, question: str) -> dict:
         #step 1: Retriever
